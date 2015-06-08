@@ -39,17 +39,17 @@ Please upload it here :
 </form>
 
 
-
-<section id="drag-drop" class="drag-drop-section">
-    <div class="container">
-      <h2>Try it yourself</h2>
-      <div id="drop-zone" class="drop-zone">
-        <div class="drop-zone-label default-label">Drag an image here</div>
-        <div class="drop-zone-label dragging-label">Drop it!</div>
+<script id="color-thief-output-template" type="text/x-mustache">
+    <div class="function get-color">
+      <h3 class="function-title">Dominant Color</h3>
+      <div class="swatches">
+        <div class="swatch" style="background-color: rgb({{color.0}}, {{color.1}}, {{color.2}})"></div>
       </div>
-      <div id="dragged-images" class="dragged-images"></div>
+      <div class="function-code">
+        <code>colorThief.getColor(image)</code>
+      </div>
     </div>
-  </section>
+  </script>
 
 
 <p><font face="Avenir Next" size=2 col="black">
@@ -58,64 +58,56 @@ Please upload it here :
 
 
 
- <script id='image-section-template' type='text/x-mustache'>
-    {{#images}}
-    <div class="image-section {{class}}">
-      <div class="image-wrap">
-        <button class="run-functions-button">
-          <span class="no-touch-label">Click</span>
-          <span class="touch-label">Tap</span>
-        </button>
-        <img class="target-image" src="{{file}}" />
-      </div>
-      <div class="color-thief-output"></div>
-    </div>
-    {{/images}}
-  </script>
 
-  <script id="color-thief-output-template" type="text/x-mustache">
-    <div class="function get-color">
-      <h3 class="function-title">Dominant Color</h3>
-      <div class="swatches">
-        <div class="swatch" style="background-color: rgb({{color.0}}, {{color.1}}, {{color.2}})"></div>
-      </div>
-      <div class="function-code">
-        <code>colorThief.getColor(image):{{elapsedTimeForGetColor}}ms</code>
-      </div>
-    </div>
-    <div class="function get-palette">
-      <h3 class="function-title">Palette</h3>
-      <div class="function-output">
-        <div class="swatches">
-          {{#palette}}
-            <div class="swatch" style="background-color: rgb({{0}}, {{1}}, {{2}})"></div>
-          {{/palette}}
-        </div>
-      </div>
-      <div class="function-code">
-        <code>colorThief.getPalette(image):{{elapsedTimeForGetPalette}}ms</code>
-      </div>
-    </div>
-  </script>
+function getAverageRGB(imgEl) {
+
+    var blockSize = 5, // only visit every 5 pixels
+        defaultRGB = {r:0,g:0,b:0}, // for non-supporting envs
+        canvas = document.createElement('canvas'),
+        context = canvas.getContext && canvas.getContext('2d'),
+        data, width, height,
+        i = -4,
+        length,
+        rgb = {r:0,g:0,b:0},
+        count = 0;
+
+    if (!context) {
+        return defaultRGB;
+    }
+
+    height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+    width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+    context.drawImage(imgEl, 0, 0);
+
+    try {
+        data = context.getImageData(0, 0, width, height);
+    } catch(e) {
+        /* security error, img on diff domain */
+        return defaultRGB;
+    }
+
+    length = data.data.length;
+
+    while ( (i += blockSize * 4) < length ) {
+        ++count;
+        rgb.r += data.data[i];
+        rgb.g += data.data[i+1];
+        rgb.b += data.data[i+2];
+    }
+
+    // ~~ used to floor values
+    rgb.r = ~~(rgb.r/count);
+    rgb.g = ~~(rgb.g/count);
+    rgb.b = ~~(rgb.b/count);
+
+    return rgb;
+
+}
 
 
-  <script src="js/jquery.js"></script>
-  <script src="js/mustache.js"></script>
-  <script src="js/color-thief.js"></script>
-  <script src="js/demo.js"></script>
-
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-2196019-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
+ <script src="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/DominantColor/src/color-thief.js"></script>
+ 
 </body>
 </html>
 
