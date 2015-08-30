@@ -4,24 +4,139 @@
 <title> 
 PANTONE 3D
 </title>
+
+
+  <meta charset="UTF-8">
+  <title>Pantone3D</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,300|Raleway:100' rel='stylesheet' type='text/css'>
+
+
+ <link rel="stylesheet" href="/Users/clementinecottineau/Documents/PANTONE3D/css/styles.css" />
+ 
+ 
+
+ <script type="text/javascript" src='/Users/clementinecottineau/bower_components/jquery/src/jquery.js'></script>
+  <script type="text/javascript" src='/Users/clementinecottineau/bower_components/adaptive.background/src/jquery.adaptive-backgrounds.js'></script>
+   <script src="/Users/clementinecottineau/Documents/PANTONE3D/background/scr/waypoints.min.js"></script>
+  <script src="/Users/clementinecottineau/Documents/PANTONE3D/background/scr/main.js"></script>
+
+ <script type="text/javascript">
+ $(document).ready(function(){
+  $.adaptiveBackground.run();
+});
+ </script>
+
+
+
 </head>
+<body>
 
-<body height="600" background="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/A7/100postcards.jpg" >
-  <tr>
-    <td>
-    </td>
-  </tr>
 
-<h1 align="center">
-<font face="Avenir Next">
-PANTONE<sup>3D</sup>
+ <header>
 
-</font></h1>
+      <h1>PANTONE<sup>3D</sup></h1>
+  <h3>Welcome to the <b>PANTONE<sup>3D</sup></b> Project</h3>
+  
+   
 
-<p>
-<font face="Avenir Next">
-Welcome to the <b>PANTONE<sup>3D</sup></b> Project
-</font></p>
+  <br>
+
+ 
+  <span class='logo'>
+    <span class='box first'></span>
+    <span class='box second'></span>
+    <span class='box third'></span>
+  </span>
+    <br>
+   <a href='file:///Users/clementinecottineau/Documents/PANTONE3D/PANTONE_3D.html#' class='button mr'>You received a postcard <br> You want to upload it NOW!</a> 
+  
+  <br>
+   <br>
+  
+    The project ... blabla bla
+
+  <br>
+    <a href='https://github.com/mary8cerise/PANTONE3D' class='button mr'>Github</a>
+  <a href='https://twitter.com/MarieCeriseCo' class='button tweet'>Tweet</a>
+
+
+  </div>
+   </div>
+      
+</header>
+
+
+  <div class='image-wrapper slow'>
+  <div class='inner'>
+    <span class='color'>
+      <span class='swatch'></span>
+    </span>
+    <img src="/Users/clementinecottineau/Documents/PANTONE3D/background/demos/images/1.jpg" data-adaptive-background='1'>
+  </div>
+</div>
+
+
+
+    <div class='image-wrapper'>
+  <div class='inner'>
+    <span class='color'>
+     </span>
+    <img height="60" src="/Users/clementinecottineau/Documents/PANTONE3D/A7/100postcards.jpg" data-adaptive-background='1'>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>
+
+
+
+<!--
+
+
+ <style type="text/css">
+
+    body{
+      max-width: 500px;
+      margin: 0 auto;
+    } 
+
+
+	.logo{
+		
+	}
+	
+    .img-wrap{
+      border: 2px solid #ccc;
+      width: 600px;
+      position: absolute;
+      top: 50%; left: 50%;
+      text-align: center;
+      color: black;
+      transform: translateY(-50%) translateX(-50%);
+      -webkit-transform: translateY(-50%) translateX(-50%);
+    }
+
+    .img-wrap img{
+      height: 100%;
+      height: 300px;
+    }
+
+    .img-wrap .text{
+      font-family: Avenir Next;
+      font-size: 100px;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+  </style>
+
+
+
+
 
 <p title="The colour of the PANTONE postcard and object should be as close as possible">
 <font face="Avenir Next">
@@ -34,83 +149,23 @@ Please upload it here :
 </font></p>
 
 
-<form name="myWebForm" action="mailto:youremail@email.com" method="post">
-<input type="file" name="uploadPhoto" id="userphoto" />
+<form name="uploadimage" method="post" value="yourpantoncolour">
+<input type="file" name="image" id="image" />
 </form>
 
+    <table id="color">
+<font face="Avenir Next">
+TEST</font></table>
 
-<script id="color-thief-output-template" type="text/x-mustache">
-    <div class="function get-color">
-      <h3 class="function-title">Dominant Color</h3>
-      <div class="swatches">
-        <div class="swatch" style="background-color: rgb({{color.0}}, {{color.1}}, {{color.2}})"></div>
-      </div>
-      <div class="function-code">
-        <code>colorThief.getColor(image)</code>
-      </div>
-    </div>
-  </script>
+
+
+
+
+ <img title="nice yellow!" src="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/A7/100postcards.jpg"  height="400" align="right" /> 
 
 
 <p><font face="Avenir Next" size=2 col="black">
 <a href="mailto:mary8cerise@gmail.com?subject=PANTONE3D WebRequest">Contact me</a>
 </font></p>
 
-
-
-
-function getAverageRGB(imgEl) {
-
-    var blockSize = 5, // only visit every 5 pixels
-        defaultRGB = {r:0,g:0,b:0}, // for non-supporting envs
-        canvas = document.createElement('canvas'),
-        context = canvas.getContext && canvas.getContext('2d'),
-        data, width, height,
-        i = -4,
-        length,
-        rgb = {r:0,g:0,b:0},
-        count = 0;
-
-    if (!context) {
-        return defaultRGB;
-    }
-
-    height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
-    width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-
-    context.drawImage(imgEl, 0, 0);
-
-    try {
-        data = context.getImageData(0, 0, width, height);
-    } catch(e) {
-        /* security error, img on diff domain */
-        return defaultRGB;
-    }
-
-    length = data.data.length;
-
-    while ( (i += blockSize * 4) < length ) {
-        ++count;
-        rgb.r += data.data[i];
-        rgb.g += data.data[i+1];
-        rgb.b += data.data[i+2];
-    }
-
-    // ~~ used to floor values
-    rgb.r = ~~(rgb.r/count);
-    rgb.g = ~~(rgb.g/count);
-    rgb.b = ~~(rgb.b/count);
-
-    return rgb;
-
-}
-
-
- <script src="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/DominantColor/src/color-thief.js"></script>
- 
-</body>
-</html>
-
-
-
-<!-- <img title="nice yellow!" src="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/A7/100postcards.jpg"  height="400" align="right" />  -->
+ -->
