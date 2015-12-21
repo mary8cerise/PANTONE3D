@@ -1,3 +1,46 @@
+
+<?php
+  $file = $_GET['file'];
+  if (!$_GET['file']){
+    $file = 'http://labs.suredev.com/stuff/speckles.jpg';
+  }
+
+  $image = imagecreatefromjpeg($file);
+  $width = imagesx($image);
+  $height = imagesy($image);
+  $pixels = $width * $height;
+  $pixel = $internpixel = 0;
+  $scores = $dist = $distances = array();
+
+  for($x = 0; $x < $width; $x++){
+    for($y = 0; $y < $height; $y++,$pixel++){
+
+      $rgb = imagecolorat($image, $x, $y);
+      $color = imagecolorsforindex($image, $rgb);
+
+      $colorkey = join(array_slice($color, 0, 3), ",");
+      $pixelkey = $x . "," . $y;
+
+      for($x2 = 0; $x2 < $width; $x2++){
+        for($y2 = 0; $y2 < $height; $y2++){
+          $internpixel++;
+          $rgb2 = imagecolorat($image, $x2, $y2);
+          $color2 = imagecolorsforindex($image, $rgb2);
+          $dist[] = sqrt(pow(($color2['red'] - $color['red']), 2) + pow(($color2['green'] - $color['green']), 2) + pow(($color2['blue'] - $color['blue']), 2));
+          $computeddists = array_sum($dist);
+          unset($dist);
+        }
+      }
+      
+      $distances[$colorkey] = $computeddists;
+    }
+  }
+  asort($distances, SORT_NUMERIC);
+  $topcolor = array_shift(array_keys($distances));
+?>
+
+
+
 <html>
 
 <head>
@@ -15,20 +58,6 @@ PANTONE 3D
  <link rel="stylesheet" href="/Users/clementinecottineau/Documents/PANTONE3D/css/styles.css" />
  
  
-
- <script type="text/javascript" src='/Users/clementinecottineau/bower_components/jquery/src/jquery.js'></script>
-  <script type="text/javascript" src='/Users/clementinecottineau/bower_components/adaptive.background/src/jquery.adaptive-backgrounds.js'></script>
-   <script src="/Users/clementinecottineau/Documents/PANTONE3D/background/scr/waypoints.min.js"></script>
-  <script src="/Users/clementinecottineau/Documents/PANTONE3D/background/scr/main.js"></script>
-
- <script type="text/javascript">
- $(document).ready(function(){
-  $.adaptiveBackground.run();
-});
- </script>
-
-
-
 </head>
 <body>
 
@@ -65,6 +94,29 @@ PANTONE 3D
    </div>
       
 </header>
+    <form action='' method='get'>
+      <label>Path to img on the www</label> <input type='text' name='file'><input type='submit'>
+    </form>
+    <img src='<?php echo $file ?>'>
+     <br />
+    <h1>The most common color is:</h1>
+    <div style='background: rgb(<?php echo $topcolor ?>); height: 100px;width:100px'></div>
+
+<hr/>
+
+
+<pre>
+<?php
+  echo 'pixel: ' . $pixel . '<br />';
+  echo 'block: ' . $block . '<br />';
+  echo 'internpixel: ' . $internpixel . '<br />';
+  echo 'pixels: ' . $pixels . '<br />';
+  echo 'x: ' . $x . '<br />';
+  echo 'y: ' . $y . '<br />';
+  echo 'top color index: ' . $topcolor . '<br />';
+  echo 'distances: ' . print_r($distances) . '<br />';
+?>
+</pre>
 
 
   <div class='image-wrapper slow'>
@@ -72,11 +124,9 @@ PANTONE 3D
     <span class='color'>
       <span class='swatch'></span>
     </span>
-    <img src="/Users/clementinecottineau/Documents/PANTONE3D/background/demos/images/1.jpg" data-adaptive-background='1'>
+    <img  class="center"  src="https://upload.wikimedia.org/wikipedia/commons/0/0b/KreeftbijDenOsse.jpg" data-adaptive-background='1'>
   </div>
 </div>
-
-
 
     <div class='image-wrapper'>
   <div class='inner'>
@@ -86,6 +136,9 @@ PANTONE 3D
   </div>
 </div>
 
+<p><font face="Avenir Next" size=2 col="black">
+<a class="center" href="mailto:mary8cerise@gmail.com?subject=PANTONE3D WebRequest">Contact me</a>
+</font></p>
 
 
 
@@ -164,8 +217,5 @@ TEST</font></table>
  <img title="nice yellow!" src="https://raw.githubusercontent.com/mary8cerise/PANTONE3D/master/A7/100postcards.jpg"  height="400" align="right" /> 
 
 
-<p><font face="Avenir Next" size=2 col="black">
-<a href="mailto:mary8cerise@gmail.com?subject=PANTONE3D WebRequest">Contact me</a>
-</font></p>
 
  -->
