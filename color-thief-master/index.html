@@ -54,11 +54,7 @@
     {{#images}}
     <div class="image-section {{class}}">
       <div class="image-wrap">
-        <button class="run-functions-button">
-          <span class="no-touch-label">Click</span>
-          <span class="touch-label">Tap</span>
-        </button>
-        <img class="target-image" src="{{file}}" />
+              <img class="target-image" src="{{file}}" />
       </div>
       <div class="color-thief-output"></div>
     </div>
@@ -67,7 +63,7 @@
 
   <script id="color-thief-output-template" type="text/x-mustache">
     <div class="function get-color">
-      <h3 class="function-title">Dominant Color</h3>
+      <h3 class="function-title" >Dominant Color</h3>
       <div class="swatches">
         <div class="swatch" style="background-color: rgb({{color.0}}, {{color.1}}, {{color.2}})"></div>
       </div>
